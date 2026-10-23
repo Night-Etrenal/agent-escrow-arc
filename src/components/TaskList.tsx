@@ -50,25 +50,40 @@ export function TaskList({ filter, address, refreshKey, onActionDone }: Props) {
             abi: AGENT_ESCROW_ABI,
             functionName: "getTask",
             args: [BigInt(i)],
-          })) as readonly [
-            string,
-            string,
-            bigint,
-            bigint,
-            bigint,
-            `0x${string}`,
-            number,
-          ];
-          const stateValue = raw[6] in TaskState ? raw[6] : TaskState.Created;
+          })) as
+            | {
+                client: string;
+                worker: string;
+                amount: bigint;
+                deadline: bigint;
+                workerClaimAfter: bigint;
+                resultHash: `0x${string}`;
+                state: number;
+              }
+            | readonly [string, string, bigint, bigint, bigint, `0x${string}`, number];
+          // getTask returns a single struct, which viem decodes as a named object;
+          // keep a tuple fallback for older ABIs.
+          const t = Array.isArray(raw)
+            ? {
+                client: raw[0],
+                worker: raw[1],
+                amount: raw[2],
+                deadline: raw[3],
+                workerClaimAfter: raw[4],
+                resultHash: raw[5],
+                state: raw[6],
+              }
+            : (raw as Exclude<typeof raw, readonly unknown[]>);
+          const stateValue = t.state in TaskState ? (t.state as TaskState) : TaskState.Created;
           results.push({
             id: BigInt(i),
             task: {
-              client: raw[0],
-              worker: raw[1],
-              amount: raw[2],
-              deadline: raw[3],
-              workerClaimAfter: raw[4],
-              resultHash: raw[5],
+              client: t.client,
+              worker: t.worker,
+              amount: t.amount,
+              deadline: t.deadline,
+              workerClaimAfter: t.workerClaimAfter,
+              resultHash: t.resultHash,
               state: stateValue,
             },
           });
