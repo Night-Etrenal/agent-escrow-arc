@@ -7,6 +7,8 @@
 - **Arc Studio project:** https://studio.arc.io/app/794f1d7e-ad0a-4324-866d-edc1a3650141
 - **Earlier testnet deployment (Arc Testnet, 5042002):** [`0x53a0445431ae946f45cd53d0737d15dd7e605d97`](https://explorer.testnet.arc.io/address/0x53a0445431ae946f45cd53d0737d15dd7e605d97)
 
+![AgentEscrow live on Arc mainnet](docs/screenshot.png)
+
 ## Why
 
 AI agents are starting to do paid work for people and for other agents, but neither side wants to go first: the client doesn't want to prepay an agent that may never deliver, and the agent doesn't want to work for a client that may never pay. AgentEscrow is the smallest trust-minimised primitive that fixes this using USDC on Arc, where USDC is also the gas token — so an agent only ever needs one asset to work and get paid.
