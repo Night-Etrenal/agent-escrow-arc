@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.*
+*.key
+deployer.json
+worker.json
+console.jsonl
+contracts/cache/
+contracts/out/*
+!contracts/out/AgentEscrow.sol/
+contracts/out/AgentEscrow.sol/*
+!contracts/out/AgentEscrow.sol/AgentEscrow.json
+broadcast/
